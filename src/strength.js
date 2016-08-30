@@ -43,47 +43,43 @@
             var specialchars = new RegExp('([!,%,&,@,#,$,^,*,?,_,~])');
 
             function GetPercentage(a, b) {
-                    return ((b / a) * 100);
-                }
+                return ((b / a) * 100);
+            }
 
-                function check_strength(thisval,thisid){
-                    if (thisval.length > 8) { characters = 1; } else { characters = -1; };
-                    if (thisval.match(upperCase)) { capitalletters = 1} else { capitalletters = 0; };
-                    if (thisval.match(lowerCase)) { loweletters = 1}  else { loweletters = 0; };
-                    if (thisval.match(numbers)) { number = 1}  else { number = 0; };
+            function check_strength(thisval,thisid){
+                if (thisval.length >= 8) { characters = 1; } else { characters = -1; };
+                if (thisval.match(upperCase)) { capitalletters = 1} else { capitalletters = 0; };
+                if (thisval.match(lowerCase)) { loweletters = 1}  else { loweletters = 0; };
+                if (thisval.match(numbers)) { number = 1}  else { number = 0; };
 
-                    var total = characters + capitalletters + loweletters + number + special;
-                    var totalpercent = GetPercentage(7, total).toFixed(0);
+                var total = characters + capitalletters + loweletters + number + special;
+                var totalpercent = GetPercentage(7, total).toFixed(0);
 
-                    if (!thisval.length) {total = -1;}
+                if (!thisval.length) {total = -1;}
 
-                    get_total(total,thisid);
-                }
+                get_total(total,thisid);
+            }
 
             function get_total(total,thisid){
 
                 var thismeter = $('div[data-meter="'+thisid+'"]');
                     if (total <= 1) {
                    thismeter.removeClass();
-                   thismeter.addClass('veryweak').html('very weak');
+                   thismeter.addClass('veryweak').html('<p>Password too short</p>');
                 } else if (total == 2){
                     thismeter.removeClass();
-                   thismeter.addClass('weak').html('weak');
+                   thismeter.addClass('weak').html('<p>Weak</p>');
                 } else if(total == 3){
                     thismeter.removeClass();
-                   thismeter.addClass('medium').html('medium');
+                   thismeter.addClass('medium').html('<p>Medium</p>');
 
                 } else {
                      thismeter.removeClass();
-                   thismeter.addClass('strong').html('strong');
+                   thismeter.addClass('strong').html('<p>Strong</p>');
                 }
-                
+
                 if (total == -1) { thismeter.removeClass().html('Strength'); }
             }
-
-
-
-
 
             var isShown = false;
             var strengthButtonText = this.options.strengthButtonText;
